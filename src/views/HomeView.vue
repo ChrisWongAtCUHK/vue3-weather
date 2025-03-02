@@ -12,14 +12,17 @@
         v-if="mapboxSearchResults"
         class="absolute bg-weather-primary text-white w-full shadow-md py-2 px-1 top-[66px]"
       >
-        <p v-if="searchError">
-          Sorry, something went wrong, please try again.
-        </p>
+        <p v-if="searchError">Sorry, something went wrong, please try again.</p>
         <p v-if="!searchError && mapboxSearchResults.length === 0">
           No results match your query, try a different term.
         </p>
         <template v-else>
-          <li v-for="searchResult in mapboxSearchResults" :key="searchResult.id">
+          <li
+            v-for="searchResult in mapboxSearchResults"
+            :key="searchResult.id"
+            class="py-2 cursor-pointer"
+            @click="previewCity(searchResult)"
+          >
             {{ searchResult.place_name }}
           </li>
         </template>
@@ -30,12 +33,14 @@
 <script setup>
 import { ref } from 'vue'
 import axios from 'axios'
+import { useRouter } from 'vue-router'
 
 const mapboxAPIKey = import.meta.env.VITE_MAPBOX_API_KEY
 const searchQuery = ref('')
 const queryTimeout = ref(null)
 const mapboxSearchResults = ref(null)
 const searchError = ref(null)
+const router = useRouter()
 
 const getSearchResults = () => {
   clearTimeout(queryTimeout.value)
@@ -54,5 +59,21 @@ const getSearchResults = () => {
     }
     mapboxSearchResults.value = null
   }, 300)
+}
+
+const previewCity = (searchResult) => {
+  const [city, state] = searchResult.place_name.split(',')
+  router.push({
+    name: 'cityView',
+    params: {
+      state: state.replaceAll(' ', ''),
+      city,
+    },
+    query: {
+      lng: searchResult.geometry.coordinates[0],
+      lat: searchResult.geometry.coordinates[1],
+      preview: true,
+    },
+  })
 }
 </script>
