@@ -33,7 +33,7 @@
       <Suspense>
         <CityList />
         <template #fallback>
-          <p>Loading...</p>
+          <CityCardSkeleton />
         </template>
       </Suspense>
     </div>
@@ -44,6 +44,7 @@ import { ref } from 'vue'
 import axios from 'axios'
 import { useRouter } from 'vue-router'
 import CityList from '../components/CityList.vue'
+import CityCardSkeleton from '../components/CityCardSkeleton.vue'
 
 const mapboxAPIKey = import.meta.env.VITE_MAPBOX_API_KEY
 const searchQuery = ref('')
