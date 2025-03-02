@@ -28,7 +28,7 @@
         }}
       </p>
       <p class="text-8xl mb-8">
-        {{ Math.round(weatherData.current.temp) }}&deg;
+        {{ Math.round((weatherData.current.temp - 32) / 9 * 5)  }}&deg;
       </p>
       <p>
         Feels like
@@ -66,7 +66,7 @@
               class="w-auto h-[50px] object-cover"
               :src="`http://openweathermap.org/img/wn/${hourData.weather[0].icon}@2x.png`"
             />
-            <p class="text-xl">{{ Math.round(hourData.temp) }}&deg;</p>
+            <p class="text-xl">{{ Math.round((hourData.temp - 32) / 9 * 5) }}&deg;</p>
           </div>
         </div>
       </div>
@@ -95,8 +95,8 @@
             :src="`http://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`"
           />
           <div class="flex gap-2 flex-1 justify-end">
-            <p>H: {{ Math.round(day.temp.max) }}</p>
-            <p>L: {{ Math.round(day.temp.min) }}</p>
+            <p>H: {{ Math.round((day.temp.max - 32) / 9 * 5) }}</p>
+            <p>L: {{ Math.round((day.temp.min - 32) / 9 * 5) }}</p>
           </div>
         </div>
       </div>
