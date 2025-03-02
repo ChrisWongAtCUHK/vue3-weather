@@ -61,15 +61,15 @@ import BaseModel from './BaseModel.vue'
 const route = useRoute()
 const router = useRouter()
 const modalActive = ref(null)
-const saveCities = ref([])
+const savedCities = ref([])
 
 const toggleModal = () => {
   modalActive.value = !modalActive.value
 }
 
 const addCity = () => {
-  if (localStorage.getItem('saveCities')) {
-    saveCities = JSON.parse(localStorage.getItem('saveCities'))
+  if (localStorage.getItem('savedCities')) {
+    savedCities.value = JSON.parse(localStorage.getItem('savedCities'))
   }
   const locationObj = {
     id: uid(),
@@ -81,8 +81,8 @@ const addCity = () => {
     },
   }
 
-  saveCities.value.push(locationObj)
-  localStorage.setItem('saveCities', JSON.stringify(saveCities.value))
+  savedCities.value.push(locationObj)
+  localStorage.setItem('savedCities', JSON.stringify(savedCities.value))
 
   let query = Object.assign({}, route.query)
   delete query.preview
