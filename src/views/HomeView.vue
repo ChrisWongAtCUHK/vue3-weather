@@ -77,7 +77,7 @@ const previewCity = (searchResult) => {
   router.push({
     name: 'cityView',
     params: {
-      state: state.replaceAll(' ', ''),
+      state: state ? state.replaceAll(' ', '') : city,
       city,
     },
     query: {
